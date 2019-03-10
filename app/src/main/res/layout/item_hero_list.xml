@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_margin="16dp">
+
+
+    <ImageView
+            android:id="@+id/ivHeroAvatar"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:transitionName="heroAvatar"
+            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp"
+            tools:targetApi="lollipop"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical">
+
+        <TextView
+                android:id="@+id/tvHeroName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                tools:text="Superman"/>
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/groups_title"/>
+
+        <TextView
+                android:id="@+id/tvGroups"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Group1, Group2, Group3"/>
+
+    </LinearLayout>
+
+</LinearLayout>

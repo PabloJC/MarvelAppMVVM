@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">MarvelApp</string>
+    <string name="error_generic">Ha ocurrido un error</string>
+    <string name="retry">Reintentar</string>
+    <string name="groups_title">Groups</string>
+    <string name="life">Vida</string>
+    <string name="power">Poder</string>
+    <string name="groups">Grupos</string>
+    <string name="full_name">Nombre completo</string>
+    <string name="height">Altura</string>
+    <string name="real_name">Nombre real</string>
+    <string name="abilities">Habilidades</string>
+</resources>

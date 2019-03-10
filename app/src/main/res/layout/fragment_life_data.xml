@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+       <com.pablojc.marvelapp.ui.customviews.LifeBoxView
+               android:id="@+id/lbRealName"
+               android:layout_width="match_parent"
+               app:box_title="@string/real_name"
+               android:layout_height="wrap_content"/>
+
+        <com.pablojc.marvelapp.ui.customviews.LifeBoxView
+                android:id="@+id/lbHeight"
+                android:layout_width="match_parent"
+                app:box_title="@string/height"
+                android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
