@@ -1,9 +1,9 @@
-package com.pablojc.marvelapp.application
+package com.pablojc.marvelapp
 
 import android.app.Application
-import com.pablojc.marvelapp.application.di.AppComponent
-import com.pablojc.marvelapp.application.di.AppModule
-import com.pablojc.marvelapp.application.di.DaggerAppComponent
+import com.pablojc.marvelapp.di.app.AppComponent
+import com.pablojc.marvelapp.di.app.AppModule
+import com.pablojc.marvelapp.di.app.DaggerAppComponent
 
 class HeroesApp: Application() {
 

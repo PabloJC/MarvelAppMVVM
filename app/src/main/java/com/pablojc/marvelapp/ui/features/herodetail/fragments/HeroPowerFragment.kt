@@ -14,43 +14,35 @@ import kotlinx.android.synthetic.main.fragment_power.*
 
 
 class HeroPowerFragment : Fragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        activity?.let {
-            (it as HeroDetailActivity).viewModel.heroesState.observe(
-                this@HeroPowerFragment, Observer {
-                    updateUI(it)
-                }
-            )
+
+    companion object {
+
+        const val POWER = "power"
+        const val ABILITIES = "ABILITIES"
+
+        fun newInstance(power: String?, abilities: String?): HeroPowerFragment {
+            val fragment = HeroPowerFragment()
+            val args = Bundle()
+            args.putString(POWER, power)
+            args.putString(ABILITIES, abilities)
+            fragment.arguments = args
+            return fragment
         }
     }
+
+    private val power: String?
+        get() = arguments?.getString(POWER)
+
+    private val abilities: String?
+        get() = arguments?.getString(ABILITIES)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_power, container, false)
     }
 
-    private fun updateUI(screenState: ScreenState<HeroDetailState>) {
-        return when(screenState){
-            is ScreenState.Loading -> showLoading()
-            is ScreenState.ShowSuccess -> renderData(screenState.renderState)
-            is ScreenState.ShowError -> showError()
-        }
-    }
-
-    private fun showError() {
-
-    }
-
-    private fun renderData(renderState: HeroDetailState) {
-        return when(renderState){
-            is HeroDetailState.ShowHero -> {
-                lbPower.setContent(renderState.items.power)
-                lbAbilities.setContent(renderState.items.abilities)
-            }
-        }
-    }
-
-    private fun showLoading() {
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        lbPower.setContent(power)
+        lbAbilities.setContent(abilities)
     }
 }

@@ -1,4 +1,4 @@
-package com.pablojc.marvelapp.application.di
+package com.pablojc.marvelapp.di.app
 
 import android.app.Application
 import android.content.Context

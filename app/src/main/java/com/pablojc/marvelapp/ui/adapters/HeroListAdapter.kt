@@ -1,14 +1,14 @@
 package com.pablojc.marvelapp.ui.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.pablojc.marvelapp.R
 import com.pablojc.marvelapp.domain.models.HeroItemList
 import com.pablojc.marvelapp.ui.adapters.holders.HeroListViewHolder
+import com.pablojc.marvelapp.ui.features.herolist.HeroListActivity
 
-class HeroListAdapter(val callbak : (Long, View) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class HeroListAdapter(val activity: HeroListActivity) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val mHeroList = mutableListOf<HeroItemList>()
 
@@ -23,7 +23,7 @@ class HeroListAdapter(val callbak : (Long, View) -> Unit) : RecyclerView.Adapter
         val v = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_hero_list, parent, false)
 
-        return HeroListViewHolder(v, callbak)
+        return HeroListViewHolder(v,activity)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

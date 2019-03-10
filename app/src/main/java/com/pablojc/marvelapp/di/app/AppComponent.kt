@@ -1,6 +1,6 @@
-package com.pablojc.marvelapp.application.di
+package com.pablojc.marvelapp.di.app
 
-import com.pablojc.marvelapp.application.HeroesApp
+import com.pablojc.marvelapp.HeroesApp
 import com.pablojc.marvelapp.data.net.retrofit.HeroApiClient
 import com.pablojc.marvelapp.data.persistence.DBManager
 import com.pablojc.marvelapp.data.repositories.HeroesRepository

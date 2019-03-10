@@ -1,6 +1,6 @@
-package com.pablojc.marvelapp.ui.features.herodetail.di
+package com.pablojc.marvelapp.di.herodetail
 
-import com.pablojc.marvelapp.application.di.AppComponent
+import com.pablojc.marvelapp.di.app.AppComponent
 import com.pablojc.marvelapp.ui.base.ActivityScope
 import com.pablojc.marvelapp.domain.interactors.GetHeroDetailInteractor
 import com.pablojc.marvelapp.ui.features.herodetail.HeroDetailActivity

@@ -10,4 +10,7 @@
     <string name="height">Altura</string>
     <string name="real_name">Nombre real</string>
     <string name="abilities">Habilidades</string>
+    <string name="error_network">Ha ocurrido un error de conexión, inténtelo más tarde</string>
+    <string name="error_server">Ups, algo ha ido mal. Inténtelo más tarde</string>
+    <string name="error_data">El superhéroe que acaba de seleccionar no existe</string>
 </resources>

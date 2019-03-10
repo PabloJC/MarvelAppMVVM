@@ -1,4 +1,4 @@
-package com.pablojc.marvelapp.ui.features.herodetail.di
+package com.pablojc.marvelapp.di.herodetail
 
 import com.pablojc.marvelapp.data.repositories.HeroesRepository
 import com.pablojc.marvelapp.domain.interactors.GetHeroDetailInteractor

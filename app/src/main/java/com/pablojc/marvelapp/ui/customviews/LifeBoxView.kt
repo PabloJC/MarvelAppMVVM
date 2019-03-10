@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import com.pablojc.marvelapp.R
-import com.pablojc.marvelapp.ui.utils.showDrawable
+import com.pablojc.marvelapp.ui.extensions.showDrawable
 import kotlinx.android.synthetic.main.view_life_box.view.*
 
 class LifeBoxView : LinearLayout{

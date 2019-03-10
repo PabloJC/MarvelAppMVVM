@@ -1,4 +1,4 @@
-package com.pablojc.marvelapp.ui.utils
+package com.pablojc.marvelapp.ui.extensions
 
 import android.graphics.drawable.Drawable
 import android.widget.ImageView

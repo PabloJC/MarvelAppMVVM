@@ -1,59 +1,59 @@
 package com.pablojc.marvelapp.ui.features.herolist
 
 import androidx.lifecycle.*
+import com.pablojc.marvelapp.R
 import com.pablojc.marvelapp.ui.base.ScreenState
 import com.pablojc.marvelapp.domain.interactors.GetHeroListInteractor
-import com.pablojc.marvelapp.domain.models.Failure
 import com.pablojc.marvelapp.domain.models.HeroItemList
+import com.pablojc.marvelapp.utils.DataError
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
-class HeroListViewModel @Inject constructor(val heroListInteractor: GetHeroListInteractor) : ViewModel() {
+class HeroListViewModel(val heroListInteractor: GetHeroListInteractor) : ViewModel() {
 
-    var heroesState = MediatorLiveData<ScreenState<HeroListState>>()
+    private lateinit var _heroesState: MediatorLiveData<ScreenState<HeroListState>>
 
-    init {
-        getHeroList()
-    }
+    val heroListState: LiveData<ScreenState<HeroListState>>
+        get() {
+            if (!::_heroesState.isInitialized) {
+                _heroesState = MediatorLiveData()
+                _heroesState.value = ScreenState.Loading
+                getHeroList()
+            }
+            return _heroesState
+        }
 
     private fun getHeroList() {
         viewModelScope.launch {
-            heroesState.value = ScreenState.Loading
             val result = withContext(Dispatchers.IO){heroListInteractor.get()}
             result.either(::handleFailure,::handleHeroList)
         }
     }
 
     private fun handleHeroList(liveData: LiveData<List<HeroItemList>>) {
-        heroesState.addSource(liveData){
+        _heroesState.addSource(liveData){
             if(it.isEmpty()){
                 reloadList()
             }
-            viewModelScope.launch {
-                heroesState.value = ScreenState.ShowSuccess(HeroListState.ShowHeroList(it))
-            }
+            _heroesState.value = ScreenState.Render(HeroListState.ShowHeroList(it))
         }
     }
 
     fun reloadList() {
         viewModelScope.launch {
-            heroesState.value = ScreenState.Loading
-            val result = withContext(Dispatchers.IO){heroListInteractor.load()}
-            result.either(::handleFailure,::handleListUpdated)
+            _heroesState.value = ScreenState.Loading
+            withContext(Dispatchers.IO){heroListInteractor.load()}
         }
     }
 
-    private fun handleListUpdated(listUpdated: Boolean) {
-        if(listUpdated){
-        }
-    }
-
-    private fun handleFailure(failure: Failure){
-        viewModelScope.launch {
-            heroesState.value = ScreenState.ShowError(failure)
-        }
+    private fun handleFailure(failure: DataError){
+        _heroesState.value = ScreenState.Render(HeroListState.ShowError(
+            when(failure) {
+                is DataError.NetworkConnection -> R.string.error_network
+                is DataError.ServerError -> R.string.error_server
+                is DataError.DataNoValid -> R.string.error_data
+            }))
     }
 
 }

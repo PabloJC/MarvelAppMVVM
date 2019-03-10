@@ -2,23 +2,19 @@ package com.pablojc.marvelapp.ui.features.herodetail
 
 import android.os.Bundle
 import com.pablojc.marvelapp.R
+import com.pablojc.marvelapp.di.herodetail.DaggerHeroDetailComponent
+import com.pablojc.marvelapp.di.herodetail.HeroDetailComponent
 import com.pablojc.marvelapp.domain.interactors.GetHeroDetailInteractor
-import com.pablojc.marvelapp.domain.models.Failure
 import com.pablojc.marvelapp.domain.models.Hero
 import com.pablojc.marvelapp.ui.adapters.HeroDetailPagerAdapter
 import com.pablojc.marvelapp.ui.base.BaseActivity
-import com.pablojc.marvelapp.ui.base.ScreenState
-import com.pablojc.marvelapp.ui.features.herodetail.di.DaggerHeroDetailComponent
-import com.pablojc.marvelapp.ui.features.herodetail.di.HeroDetailComponent
-import com.pablojc.marvelapp.ui.utils.observe
-import com.pablojc.marvelapp.ui.utils.showCircle
-import com.pablojc.marvelapp.ui.utils.withViewModel
+import com.pablojc.marvelapp.ui.extensions.*
 import kotlinx.android.synthetic.main.activity_hero_detail.*
 import javax.inject.Inject
 
 class HeroDetailActivity : BaseActivity() {
 
-    lateinit var viewModel: HeroDetailViewModel
+    private lateinit var viewModel: HeroDetailViewModel
     private lateinit var viewPagerAdapter: HeroDetailPagerAdapter
 
     @Inject
@@ -30,7 +26,6 @@ class HeroDetailActivity : BaseActivity() {
             .build()
     }
 
-
     private val heroId: Long?
         get() = intent.getLongExtra(HERO_ID,0)
 
@@ -39,57 +34,31 @@ class HeroDetailActivity : BaseActivity() {
         setContentView(R.layout.activity_hero_detail)
         component.inject(this)
 
-
-        initViews()
+        setToolbarWithBack(toolbar)
         initViewModel()
-    }
-
-    private fun updateUI(screenState: ScreenState<HeroDetailState>?) {
-        return when(screenState){
-            is ScreenState.Loading -> showLoading()
-            is ScreenState.ShowSuccess-> renderData(screenState.renderState)
-            is ScreenState.ShowError -> showError(screenState.error)
-            else -> showError()
-        }
-    }
-
-    private fun initViews() {
-
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
-
-        toolbar.setNavigationOnClickListener { onBackPressed() }
-
-        viewPagerAdapter = HeroDetailPagerAdapter(supportFragmentManager, this)
-
-        viewPager.adapter = viewPagerAdapter
-        viewPager.offscreenPageLimit = 3
-        tabLayout.setupWithViewPager(viewPager)
     }
 
     private fun initViewModel() {
         viewModel = withViewModel({ HeroDetailViewModel(heroId,heroDetailInteractor) }){
-            observe(heroesState,::updateUI)
+            observe(heroDetailState,::renderState)
         }
     }
 
-    private fun showLoading() {
-    }
-
-    private fun renderData(renderState: HeroDetailState) {
-        return when(renderState){
-            is HeroDetailState.ShowHero -> renderHero(renderState.items)
+    private fun renderState(state: HeroDetailState){
+        return when(state){
+            is HeroDetailState.ShowHero -> renderHero(state.hero)
+            HeroDetailState.ShowError -> showToast(R.string.error_generic)
         }
     }
 
-    private fun showError(error: Failure? = null) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    private fun renderHero(hero: Hero) {
+        hero.apply {
+            tvName.text = name
+            ivHeroAvatar.showCircle(photo)
+            viewPagerAdapter = HeroDetailPagerAdapter(supportFragmentManager, this@HeroDetailActivity,this)
+            initViewPagerWithTabs(viewPager,tabLayout,viewPagerAdapter)
+        }
 
-    private fun renderHero(items: Hero) {
-        tvName.text = items.name
-        ivHeroAvatar.showCircle(items.photo)
     }
 
     companion object {

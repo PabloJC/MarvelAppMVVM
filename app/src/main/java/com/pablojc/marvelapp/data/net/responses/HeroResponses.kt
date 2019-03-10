@@ -1,4 +1,4 @@
-package com.pablojc.marvelapp.data.net.modelresponses
+package com.pablojc.marvelapp.data.net.responses
 
 import com.google.gson.annotations.SerializedName
 

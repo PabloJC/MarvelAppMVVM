@@ -1,4 +1,4 @@
-package com.pablojc.marvelapp.ui.utils
+package com.pablojc.marvelapp.ui.extensions
 
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.*
@@ -23,7 +23,7 @@ inline fun <reified T : ViewModel> FragmentActivity.getViewModel(crossinline fac
 
     return ViewModelProviders.of(this, vmFactory)[T::class.java]
 }
-fun <T : Any, L : LiveData<T>> LifecycleOwner.observe(liveData: L, body: (T?) -> Unit) {
+fun <T : Any, L : LiveData<T>> LifecycleOwner.observe(liveData: L, body: (T) -> Unit) {
     liveData.observe(this, Observer(body))
 }
 

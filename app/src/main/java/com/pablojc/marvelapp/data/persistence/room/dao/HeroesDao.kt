@@ -17,5 +17,5 @@ interface HeroesDao{
     fun updateHeroes(heroes: List<HeroEntity>)
 
     @Query("SELECT * FROM heroe WHERE id = :heroId")
-    fun findHeroById(heroId: Long): LiveData<HeroEntity>
+    fun findHeroById(heroId: Long): HeroEntity
 }

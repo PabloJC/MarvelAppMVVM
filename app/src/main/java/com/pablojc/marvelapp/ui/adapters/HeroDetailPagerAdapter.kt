@@ -5,11 +5,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.pablojc.marvelapp.R
+import com.pablojc.marvelapp.domain.models.Hero
 import com.pablojc.marvelapp.ui.features.herodetail.fragments.HeroGroupsFragment
 import com.pablojc.marvelapp.ui.features.herodetail.fragments.HeroLifeFragment
 import com.pablojc.marvelapp.ui.features.herodetail.fragments.HeroPowerFragment
 
-class HeroDetailPagerAdapter(fm: FragmentManager, private val context: Context) : FragmentPagerAdapter(fm) {
+class HeroDetailPagerAdapter(fm: FragmentManager, private val context: Context, val hero: Hero) : FragmentPagerAdapter(fm) {
 
     private val fragmentList = arrayListOf<Fragment>()
 
@@ -18,9 +19,11 @@ class HeroDetailPagerAdapter(fm: FragmentManager, private val context: Context) 
     }
 
     private fun setTabs() {
-        fragmentList.add(HeroLifeFragment())
-        fragmentList.add(HeroPowerFragment())
-        fragmentList.add(HeroGroupsFragment())
+        hero.apply{
+            fragmentList.add(HeroLifeFragment.newInstance(realName,height))
+            fragmentList.add(HeroPowerFragment.newInstance(power,abilities))
+            fragmentList.add(HeroGroupsFragment.newInstance(groups))
+        }
     }
 
     override fun getItem(position: Int)= fragmentList[position]
